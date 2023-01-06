@@ -8,11 +8,14 @@
         action="https://jsonplaceholder.typicode.com/posts/"
         multiple
         :headers="headers"
+        :on-change="loadFile"
+        :auto-change="headleChange"
       >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">请勿上传1G以上的文件</div>
       </el-upload>
+      <el-button @click="submit">上传</el-button>
     </div>
     <!-- <div class="upload">
       <div class="div-label">
@@ -41,7 +44,22 @@ export default {
   data(){
     return{
       headers:{
-         'Authorization': 'JWT ' + localStorage.getItem('token'),
+         'Authorization': localStorage.getItem('token'),
+      },
+      uploadFles:[]
+    }
+  },
+  methods:{
+    loadFile(file,fileList){
+        this.uploadFles=fileList
+    },
+    submit(){
+      let file = this.uploadFiles[0]
+      let reader = new FileReader()
+      reader.readAsText(file.raw)
+      reader.onloader=(e)=>{
+        const fileString = e.target.result
+        console.log(fileString);
       }
     }
   }

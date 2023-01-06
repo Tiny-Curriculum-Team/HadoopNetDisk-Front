@@ -16,16 +16,21 @@
 
 <script>
     import bgcImg from "/src/assets/images/title.jpg";
+    import getfile from "/src/api/file"
     export default {
         name:'FirstCatalog',
         data(){
             return{
                 bgcImg,
-                data:[]
+                data:''
             }
         },
         methods:{
-
+            getfils(){
+                getfile(this.data).then((res)=>{
+                    console.log(res);
+                })
+            }
         },
        mounted(){
         console.log(this.$route.params.path);
